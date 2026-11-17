@@ -1,0 +1,151 @@
+
+`html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم متجر Reemasstyle</title>
+  <!-- استدعاء مكتبة التصميم السريع والخط العربي -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- الشريط العلوي -->
+  <header class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-[#1A1A1A] text-[#C5A880] flex items-center justify-center font-bold text-lg">
+        R
+      </div>
+      <div>
+        <h1 class="text-lg font-bold text-gray-900 leading-tight">Reemasstyle</h1>
+        <p class="text-xs text-gray-500">لوحة الإدارة والطلبات</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center gap-1.5 bg-green-50 text-green-700 text-xs font-semibold px-3 py-1 rounded-full border border-green-200">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        المتجر متصل
+      </span>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-4 md:p-6 space-y-6">
+
+    <!-- كروت الإحصائيات السريعة -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+        <p class="text-xs text-gray-500">إجمالي المبيعات</p>
+        <p class="text-xl font-bold text-gray-900 mt-1">4,350 ر.س</p>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+        <p class="text-xs text-gray-500">طلبات اليوم</p>
+        <p class="text-xl font-bold text-[#D8A48F] mt-1">5 طلبات</p>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+        <p class="text-xs text-gray-500">فساتين وعبايات متوفرة</p>
+        <p class="text-xl font-bold text-gray-900 mt-1">18 قطعة</p>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+        <p class="text-xs text-gray-500">نسبة التسليم الناجح</p>
+        <p class="text-xl font-bold text-green-600 mt-1">98%</p>
+      </div>
+    </section>
+
+    <!-- نموذج إضافة قطعة ملابس جديدة -->
+    <section class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+      <h2 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <span>+</span> إضافة قطعة ملابس جديدة للمتجر
+      </h2>
+      <form id="productForm" onsubmit="addProduct(event)" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+          <label class="block text-xs text-gray-600 mb-1">اسم الفستان أو العباية</label>
+          <input type="text" id="pTitle" required placeholder="مثال: فستان حرير ناعم" class="w-full text-sm border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:border-[#1A1A1A]">
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600 mb-1">السعر (ر.س)</label>
+          <input type="number" id="pPrice" required placeholder="مثال: 450" class="w-full text-sm border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:border-[#1A1A1A]">
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600 mb-1">المقاسات المتوفرة</label>
+          <input type="text" id="pSizes" required placeholder="مثال: S, M, L, XL" class="w-full text-sm border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:border-[#1A1A1A]">
+        </div>
+        <div class="flex items-end">
+          <button type="submit" class="w-full bg-[#1A1A1A] hover:bg-black text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-colors">
+            حفظ وإضافة للمتجر
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- جدول إدارة الطلبات الواردة -->
+    <section class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+      <div class="p-5 border-b border-gray-100 flex justify-between items-center">
+        <h2 class="text-base font-bold text-gray-900">طلبات العميلات الواردة</h2>
+        <span class="text-xs text-gray-500">تحديث فوري</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-sm">
+          <thead class="bg-gray-50 text-gray-600 border-b border-gray-100">
+            <tr>
+              <th class="p-3.5">رقم الطلب</th>
+              <th class="p-3.5">اسم العميلة</th>
+              <th class="p-3.5">المدينة</th>
+              <th class="p-3.5">المنتجات المختارة</th>
+              <th class="p-3.5">الإجمالي</th>
+              <th class="p-3.5">طريقة الدفع</th>
+              <th class="p-3.5">حالة التوصيل</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody" class="divide-y divide-gray-100">
+            <tr>
+              <td class="p-3.5 font-bold">#RMS-1001</td>
+              <td class="p-3.5">سارة العتيبي</td>
+              <td class="p-3.5">الرياض</td>
+              <td class="p-3.5 text-xs text-gray-600">فستان سهرة حريري (مقاس M - لون عاجي)</td>
+              <td class="p-3.5 font-bold text-[#D8A48F]">450 ر.س</td>
+              <td class="p-3.5"><span class="text-xs bg-gray-100 px-2 py-1 rounded">عند الاستلام</span></td>
+              <td class="p-3.5">
+                <select class="text-xs bg-yellow-50 text-yellow-800 border border-yellow-200 rounded p-1 font-medium focus:outline-none">
+                  <option selected>قيد التجهيز</option>
+                  <option>خرج للتوصيل</option>
+                  <option>تم التسليم</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-bold">#RMS-1002</td>
+              <td class="p-3.5">ريم الشمري</td>
+              <td class="p-3.5">جدة</td>
+              <td class="p-3.5 text-xs text-gray-600">عباية مخملية بتطريز ذهبي (مقاس 56)</td>
+              <td class="p-3.5 font-bold text-[#D8A48F]">380 ر.س</td>
+              <td class="p-3.5"><span class="text-xs bg-gray-100 px-2 py-1 rounded">عند الاستلام</span></td>
+              <td class="p-3.5">
+                <select class="text-xs bg-blue-50 text-blue-800 border border-blue-200 rounded p-1 font-medium focus:outline-none">
+                  <option>قيد التجهيز</option>
+                  <option selected>خرج للتوصيل</option>
+                  <option>تم التسليم</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+  <script>
+    function addProduct(e) {
+      e.preventDefault();
+      const title = document.getElementById('pTitle').value;
+      const price = document.getElementById('pPrice').value;
+      alert(تمت إضافة القطعة: "${title}" بسعر ${price} ر.س بنجاح إلى قاعدة بيانات المتجر.);
+      document.getElementById('productForm').reset();
+    }
+  </script>
+</body>
+</html>
